@@ -18,10 +18,10 @@ class LoginController extends Controller
      */
     protected function authenticated()
     {
-        if (Auth::user()->status == 0) {
-            // Redirect to homepage with a warning message if user is blocked
-            return redirect('/')->with('warning', 'Your status is blocked, please contact super admin!');
-        }
+        // if (Auth::user()->status == 0) {
+        //     // Redirect to homepage with a warning message if user is blocked
+        //     return redirect('/')->with('warning', 'Your status is blocked, please contact super admin!');
+        // }
 
         // Redirect based on user role
         $role = Auth::user()->role;
