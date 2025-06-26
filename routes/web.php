@@ -34,5 +34,7 @@ Route::middleware(['auth', 'isUser'])->group(function () {
     Route::get('user/create/deposits', [DepositController::class, 'create'])->name('user.create.deposit');
     Route::post('user/store/deposits', [DepositController::class, 'store'])->name('user.store.deposit');
 
-
+    Route::get('user/withdrawl', [WithdrawalController::class, 'withdrawl'])->name('user.withdrawl');
+    Route::get('user/create/withdrawl', [WithdrawalController::class, 'create'])->name('user.create.withdrawl');
+    Route::post('user/store/withdrawl', [WithdrawalController::class, 'store'])->name('user.store.withdrawl');
 });

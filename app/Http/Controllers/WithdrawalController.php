@@ -10,9 +10,11 @@ class WithdrawalController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function withdrawl()
     {
-        //
+        $withdrawl = Withdrawal::where('user_id', auth()->user()->id)->get();
+
+        return view('user.withdrawals.withdrawl', compact('withdrawl'));
     }
 
     /**
@@ -20,7 +22,7 @@ class WithdrawalController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.withdrawals.withdrawl_create');
     }
 
     /**
@@ -28,13 +30,27 @@ class WithdrawalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        unset($data['_token']);
+        if ($request->hasFile('proof')) {
+            $file = $request->file('proof');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $directory = 'Files';
+            $file->storeAs($directory, $fileName, 'public');
+            $url = url('/');
+            $data['proof'] = $fileName;
+        }
+        $data['user_id'] = auth()->user()->id;
+        $withdrawls =  new Withdrawal();
+        $withdrawls->create($data);
+
+        return redirect()->route('user.withdrawl')->with('success', 'Withdrawal request created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Withdrawal $withdrawal)
+    public function show(Withdrawal $withdrawls)
     {
         //
     }
@@ -42,7 +58,7 @@ class WithdrawalController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Withdrawal $withdrawal)
+    public function edit(Withdrawal $withdrawls)
     {
         //
     }
@@ -50,7 +66,7 @@ class WithdrawalController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Withdrawal $withdrawal)
+    public function update(Request $request, Withdrawal $withdrawls)
     {
         //
     }
@@ -58,7 +74,7 @@ class WithdrawalController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Withdrawal $withdrawal)
+    public function destroy(Withdrawal $withdrawls)
     {
         //
     }

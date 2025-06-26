@@ -4,29 +4,28 @@
 <div id="appCapsule">
     <div class="section mt-4">
         <div class="section-heading">
-            <h2 class="title">Deposit</h2>
-            <a href="{{route('user.create.deposit')}}" class="btn btn-success">Add Deposit</a>
+            <h2 class="title">Withdraw</h2>
+            <a href="{{route('user.create.withdrawl')}}" class="btn btn-success">Add Withdraw</a>
         </div>
         <div class="transactions">
-            @if(count($deposits) > 0)
-            @foreach ($deposits as $deposit)
+            @if(count($withdrawl) > 0)
+            @foreach ($withdrawl as $withdraw)
             <a href="#" class="item">
                 <div class="detail">
-                    <img src="{{asset('/storage/Files').'/'.@$deposit->proof}}" alt="img" class="image-block imaged w48">
                     <div>
-                        <strong>Deposit</strong>
-                        <p>{{$deposit->status}}</p>
+                        <strong>Withdraw</strong>
+                        <p>{{$withdraw->status}}</p>
                     </div>
                 </div>
                 <div class="right">
-                    <div class="price ">  $ {{$deposit->amount}}</div>
+                    <div class="price ">  $ {{$withdraw->amount}}</div>
                 </div>
             </a>
             @endforeach
             @else
             <div class="appFooter">
                 <div class="footer-title">
-                  No deposits found
+                  No withdrawl found
               </div>
           </div>
           @endif

@@ -1,21 +1,15 @@
 @extends('user.layouts.app')
 @section('content')
-
 <!-- App Capsule -->
 <div id="appCapsule">
-
     <div class="section mt-4">
         <div class="section-heading">
             <h2 class="title">Deposit Create</h2>
-
         </div>
         <div class="transactions">
-
             <div  class="item" style="display:block;">
-              <form action="{{route('user.store.deposit')}}" method="post" enctype="multipart/form-data">
+              <form action="{{route('user.store.withdrawl')}}" method="post" enctype="multipart/form-data">
                 @csrf
-
-
                 <div class="row">
                     <div class="col-md-12 col-lg-6">
                       <div class="form-group">
@@ -25,30 +19,18 @@
                     </div>
 
                 </div>
-                <div class="col-md-12 col-lg-6">
-                  <div class="form-group">
-                    <label for="email2">Proof</label>
-                    <input type="file" class="form-control" id="email2ww" value="" name="proof" placeholder="Enter Title" required>
-                </div>
+
             </div>
 
-        </div>
-
-        <div class="card-action mt-2">
-          <button type="submit" class="btn btn-success">Submit</button>
-      </div>
-
-
-  </form>
-</div>
-
-
+            <div class="card-action mt-2">
+              <button type="submit" class="btn btn-success">Submit</button>
+          </div>
+      </form>
+  </div>
 </div>
 </div>
-
 
 </div>
 <!-- * App Capsule -->
-
 
 @endsection
