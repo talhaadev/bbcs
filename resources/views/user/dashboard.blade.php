@@ -68,11 +68,11 @@
                 <!-- Wallet Footer -->
                 <div class="wallet-footer">
                     <div class="item">
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#withdrawActionSheet">
+                        <a href="{{route('user.deposits')}}" >
                             <div class="icon-wrapper bg-danger">
                                 <i class="fas fa-arrow-down"></i>
                             </div>
-                            <strong>Withdraw</strong>
+                            <strong>Deposit</strong>
                         </a>
                     </div>
                     <div class="item">
@@ -406,7 +406,7 @@
             </div>
         </div>
         <!-- * Transactions -->
-        
+
 
 
         <!-- app footer -->
