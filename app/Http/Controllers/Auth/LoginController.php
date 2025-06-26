@@ -53,7 +53,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $this->validate($request, [
-            'email' => 'required|string',
+            'phone_number' => 'required|string',
             'password' => 'required|string',
         ]);
 
@@ -67,7 +67,7 @@ class LoginController extends Controller
 
         // Failed login
         return redirect()->back()->withErrors([
-            'email' => 'Invalid email or password',
+            'phone_number' => 'Invalid number or password',
         ])->withInput($request->except('password'));
     }
 
@@ -77,16 +77,27 @@ class LoginController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return array
      */
-    protected function credentials(Request $request)
-    {
-        $userName = trim($request->input('email'));
-        $loginField = filter_var($userName, FILTER_VALIDATE_EMAIL) ? 'email' : 'user_name';
+    // protected function credentials(Request $request)
+    // {
+    //     $userName = trim($request->input('email'));
+    //     $loginField = filter_var($userName, FILTER_VALIDATE_EMAIL) ? 'email' : 'user_name';
 
-        return [
-            $loginField => $userName,
-            'password' => trim($request->input('password')),
-        ];
-    }
+    //     return [
+    //         $loginField => $userName,
+    //         'password' => trim($request->input('password')),
+    //     ];
+    // }
+
+    protected function credentials(Request $request)
+{
+    return [
+        'phone_number' => trim($request->input('phone_number')),
+        'password' => trim($request->input('password')),
+    ];
+}
+
+
+
 
     /**
      * Create a new controller instance.

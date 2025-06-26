@@ -15,7 +15,7 @@
                       <div class="form-group">
                         <label for="email2">Amount</label>
                         <input type="hidden" name="user_id" value="{{auth()->user()->id}}">
-                        <input type="number" class="form-control" id="email2" value="" name="amount" placeholder="Enter Amount" required>
+                        <input type="number" class="form-control" id="email2" value="" min="1" max="{{auth()->user()->balance}}" name="amount" placeholder="Enter Amount" required>
                     </div>
 
                 </div>

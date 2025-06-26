@@ -6,6 +6,8 @@ use App\Helpers\GlobalFunctionsTrait;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Deposit;
+use App\Models\Withdrawal;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
@@ -63,7 +65,7 @@ class AdminController extends Controller
 
         return redirect()->route('setting')->with('success', 'Basic Settings Updated.');
     }
-    
+
 
     public function paymentSetting(Request $request)
     {
@@ -72,8 +74,61 @@ class AdminController extends Controller
         $this->storeGlobalConfig('paypal_secret', $request->paypal_secret);
         $this->storeGlobalConfig('paypal_mode', $request->paypal_mode);
         $this->storeGlobalConfig('paypal_status', $request->has('paypal_status') ? 1 : 0);
-        
-        
+
+
         return redirect()->route('setting')->with('success', 'Payment settings updated successfully');
     }
+
+
+    public function getdeposits()
+    {
+        $deposits = Deposit::with('user')->orderBy('id', 'desc')->get();
+        return view('admin.deposits', compact('deposits'));
+    }
+
+        public function getwithdrawals()
+    {
+        $withdrawals = Withdrawal::with('user')->orderBy('id', 'desc')->get();
+        return view('admin.withdrawals', compact('withdrawals'));
+    }
+
+    public function ChangedepositStatus(Request $request,$id)
+    {
+        $deposit = Deposit::find($id);
+        $user = User::find($deposit->user_id);
+        if ($deposit) {
+            $deposit->status = $request->status;
+            if ($request->status == 'accepted') {
+                $user->balance += $deposit->amount;
+                $user->save();
+            }
+            $deposit->save();
+            return redirect()->route('deposits')->with('success', 'Deposit status changed successfully');
+        }
+
+    }
+
+        public function ChangedwithdrawalStatus(Request $request,$id)
+    {
+        $withdrawal = Withdrawal::find($id);
+        $user = User::find($withdrawal->user_id);
+        if($withdrawal->amount > $user->balance) {
+            return redirect()->route('withdrawals')->with('error', 'Insufficient balance for this withdrawal');
+        }
+        if ($withdrawal) {
+            $withdrawal->status = $request->status;
+            if ($request->status == 'accepted') {
+                $user->balance -= $withdrawal->amount;
+                $user->save();
+            }
+
+            $withdrawal->save();
+            return redirect()->route('withdrawals')->with('success', 'Withdrawal status changed successfully');
+        }
+
+    }
+
+
+
+
 }

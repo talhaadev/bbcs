@@ -25,6 +25,10 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/admin/setting', [AdminController::class, 'getSettings'])->name('setting');
     Route::post('/admin/edit_setting', [AdminController::class, 'editSetting'])->name('settings.edit');
 
+    Route::get('/admin/deposits', [AdminController::class, 'getdeposits'])->name('deposits');
+    Route::get('/admin/deposit/status/{id}', [AdminController::class, 'ChangedepositStatus']);
+    Route::get('/admin/withdrawals', [AdminController::class, 'getwithdrawals'])->name('withdrawals');
+    Route::get('/admin/withdrawal/status/{id}', [AdminController::class, 'ChangedwithdrawalStatus']);
 });
 
 Route::middleware(['auth', 'isUser'])->group(function () {

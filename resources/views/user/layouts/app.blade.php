@@ -374,6 +374,40 @@
 </div>
 
 
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<script>
+    let Toast = Swal.mixin({
+        toast: true,
+        position: 'top-right',
+        showConfirmButton: false,
+        timer: 3000,
+        showCloseButton: true,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+    @if(session()->has('success'))
+    Toast.fire({
+        icon: 'success',
+        title: '{{ session()->get('success') }}'
+    })
+    @endif
+    @if(session()->has('warning'))
+    Toast.fire({
+        icon: 'v',
+        title: '{{ session()->get('warning') }}'
+    })
+    @endif
+    @if(session()->has('error'))
+    Toast.fire({
+        icon: 'error',
+        title: '{{ session()->get('error') }}'
+    })
+    @endif
+</script>
 </body></html>
+
 

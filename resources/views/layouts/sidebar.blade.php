@@ -9,8 +9,20 @@
                     <i class="fas fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
-            </li>           
+            </li>
             <hr>
+            <li>
+                <a href="{{ route('deposits') }}" class="waves-effect">
+                    <i class="fas fa-cogs"></i>
+                    <span>Deposit Requests</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('withdrawals')}}" class="waves-effect">
+                    <i class="fas fa-cogs"></i>
+                    <span>Withdrawal Requests</span>
+                </a>
+            </li>
             <li>
                 <a href="{{ route('setting') }}" class="waves-effect">
                     <i class="fas fa-cogs"></i>
@@ -19,5 +31,5 @@
             </li>
         </ul>
     @endif
-    
+
 </div>
