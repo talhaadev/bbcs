@@ -10,14 +10,14 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('send.otp') }}">
+    <form method="POST" action="{{ route('password.email') }}">
         @csrf
 
         <div class="mb-3">
-            <label for="email" class="form-label">{{ __('Email Address') }}</label>
-            <input id="email" type="email"
+            <label for="email" class="form-label">{{ __('Otp') }}</label>
+            <input id="email" type="number"
                    class="form-control @error('email') is-invalid @enderror"
-                   name="email" value="{{ old('email') }}" required autofocus>
+                   name="otp" value="{{ old('email') }}" required autofocus>
 
             @error('email')
                 <div class="invalid-feedback">
@@ -28,7 +28,7 @@
 
 
         <button type="submit" class="btn btn-primary">
-            {{ __('Send Password Reset Link') }}
+            {{ __('submit') }}
         </button>
     </form>
 </div>

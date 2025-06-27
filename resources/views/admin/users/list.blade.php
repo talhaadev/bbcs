@@ -90,12 +90,12 @@
     <div class="col-12">
         <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-secondary p-3 text-white mb-2"
             style="color: white !important">
-            <h4 class="mb-sm-0 font-size-18" style="color: white !important">Withdrawals</h4>
+            <h4 class="mb-sm-0 font-size-18" style="color: white !important">Users</h4>
             {{-- {{ $errors }} --}}
             <div class="page-title-right">
                 <ol class="breadcrumb m-0 text-white">
                     <li class="breadcrumb-item"><a href="{{route('dashboard')}}" ript style="color: white !important">
-                            DASHBOARD </a> / Withdrawals</li>
+                            DASHBOARD </a> / Users</li>
                 </ol>
             </div>
         </div>
@@ -110,39 +110,27 @@
                     <thead>
                         <tr>
                             <th>#SR</th>
-                            <th>User</th>
-                            <th>Amount</th>
-                            <th>Status</th>
-                            <th>Date</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <th>Balance</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($withdrawals as $ind => $withdrawal)
+                        @foreach($users as $ind => $user)
                         <tr>
                             <td>{{ $ind + 1 }}</td>
-                            <td>{{ $withdrawal->user->name }}</td>
-                            <td>${{ number_format($withdrawal->amount, 2) }}</td>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->phone_number }}</td>
+                            <td>$ {{ $user->balance }}</td>
                             <td>
-                                @if($withdrawal->status == 'pending')
-                                <span class="badge bg-warning">{{ $withdrawal->status }}</span>
-                                @elseif($withdrawal->status == 'accepted')
-                                <span class="badge bg-success">{{ $withdrawal->status }}</span>
-                                @elseif($withdrawal->status == 'rejected')
-                                <span class="badge bg-danger">{{ $withdrawal->status }}</span>
-                                @endif
-                            </td>
-                            <td>{{ $withdrawal->created_at->format('Y-m-d H:i:s') }}</td>
-                            <td>
-                                @if($withdrawal->status == 'pending')
-                                <a href="{{url('/admin/withdrawal/status/'.$withdrawal->id.'?status=accepted')}}" class="btn btn-success">Accept Now</a>
-                                <a href="{{url('/admin/withdrawal/status/'.$withdrawal->id.'?status=rejected')}}" class="btn btn-danger">Reject Now</a>
-                                @else
-                                -
-                                @endif
+                          <a href="{{ route('impersonate', $user->id) }}" class="btn btn-success">Login</a>
                             </td>
                         </tr>
                         @endforeach
+
                     </tbody>
                 </table>
             </div>

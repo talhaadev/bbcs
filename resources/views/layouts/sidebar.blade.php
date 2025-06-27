@@ -24,6 +24,12 @@
                 </a>
             </li>
             <li>
+                <a href="{{route('admin.users')}}" class="waves-effect">
+                    <i class="fas fa-cogs"></i>
+                    <span>Users</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('setting') }}" class="waves-effect">
                     <i class="fas fa-cogs"></i>
                     <span>Panel Settings</span>

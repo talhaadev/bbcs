@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             'role' => 'user',
             'status' => 1,
             'phone_number' => '923480420355',
+            'referral_code' => 'user@0355',
             'password' => Hash::make('12345678'),
         ]);
 

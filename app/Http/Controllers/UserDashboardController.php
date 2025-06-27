@@ -13,4 +13,11 @@ class UserDashboardController extends Controller
         }
         return view('user.dashboard');
     }
+    public function profile(Request $request)
+    {
+        if (!Auth::user() || Auth::user()->role != 'user') {
+            return view('auth.login');
+        }
+        return view('user.profile');
+    }
 }

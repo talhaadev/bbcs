@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\WithdrawalController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -16,11 +17,42 @@ Route::get('/run-migrations', function () {
     return 'Migrations run successfully.';
 });
 
+
+Route::get('forgot/password', [AdminController::class, 'sendotp'])->name('forgot.password');
+Route::post('send/otp', [AdminController::class, 'sendOtpEmail'])->name('send.otp');
+Route::get('login/otp/{id}', [AdminController::class, 'LoginOtp'])->name('login.otp');
+
+
 Auth::routes();
 Route::post('/otp-verified-login', [App\Http\Controllers\Auth\PhoneAuthController::class, 'handleOtpLogin']);
 
-
 Route::middleware(['auth', 'isAdmin'])->group(function () {
+
+    Route::get('/impersonate/{id}', function ($id) {
+    $admin = Auth::user();
+
+    // Ensure only admins can impersonate
+    if ($admin->role === 'admin') {
+        session(['impersonate' => $admin->id]); // Save current admin ID
+        Auth::loginUsingId($id); // Switch to target user
+        return redirect('user/dashboard'); // Redirect to user dashboard or home
+    }
+
+    abort(403, 'Unauthorized action.');
+})->name('impersonate');
+
+// Stop impersonation
+Route::get('/stop-impersonate', function () {
+    if (session()->has('impersonate')) {
+        $adminId = session('impersonate');
+        Auth::loginUsingId($adminId); // Switch back to admin
+        session()->forget('impersonate');
+        return redirect('/admin-dashboard'); // Redirect to admin panel
+    }
+
+    return redirect('/');
+})->name('stop.impersonate');
+
 
     Route::get('admin/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('/admin/setting', [AdminController::class, 'getSettings'])->name('setting');
@@ -30,10 +62,14 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/admin/deposit/status/{id}', [AdminController::class, 'ChangedepositStatus']);
     Route::get('/admin/withdrawals', [AdminController::class, 'getwithdrawals'])->name('withdrawals');
     Route::get('/admin/withdrawal/status/{id}', [AdminController::class, 'ChangedwithdrawalStatus']);
+
+
+    Route::get('/admin/users', [AdminController::class, 'getUsers'])->name('admin.users');
 });
 
 Route::middleware(['auth', 'isUser'])->group(function () {
 
+    Route::get('user/profile', [UserDashboardController::class, 'profile'])->name('user.profile');
     Route::get('user/dashboard', [UserDashboardController::class, 'dashboard'])->name('user.dashboard');
     Route::get('user/deposits', [DepositController::class, 'deposits'])->name('user.deposits');
     Route::get('user/create/deposits', [DepositController::class, 'create'])->name('user.create.deposit');

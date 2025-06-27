@@ -6,6 +6,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Str;
+use App\Models\User;
 
 trait SendsPasswordResetEmails
 {
@@ -16,6 +18,7 @@ trait SendsPasswordResetEmails
      */
     public function showLinkRequestForm()
     {
+
         return view('auth.passwords.email');
     }
 
@@ -32,9 +35,19 @@ trait SendsPasswordResetEmails
         // We will send the password reset link to this user. Once we have attempted
         // to send the link, we will examine the response then see the message we
         // need to show to the user. Finally, we'll send out a proper response.
+
+            $user = User::where('email', $request->email)->first();
+
+    if ($user) {
+        // Step 3: Generate a unique 6-digit OTP
+        $otp = rand(100000, 999999);
+        $user->otp = $otp;
+        $user->save();
+    }
         $response = $this->broker()->sendResetLink(
             $this->credentials($request)
         );
+
 
         return $response == Password::RESET_LINK_SENT
                     ? $this->sendResetLinkResponse($request, $response)

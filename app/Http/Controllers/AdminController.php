@@ -9,10 +9,51 @@ use App\Models\User;
 use App\Models\Deposit;
 use App\Models\Withdrawal;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\SendOtpMail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
     use GlobalFunctionsTrait;
+
+
+    public function sendotp(){
+     return view('auth.passwords.email');
+    }
+
+    public function sendOtpEmail(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+        if ($user) {
+            // Generate a unique 6-digit OTP
+            $otp = rand(100000, 999999);
+            $user->otp = $otp;
+            $user->save();
+           try {
+    Mail::to($user->email)->send(new SendOtpMail($otp));
+} catch (\Exception $e) {
+    Log::error('Mail sending failed: ' . $e->getMessage());
+    return redirect()->back()->with('error', 'Mail failed: ' . $e->getMessage());
+}
+            return redirect(url('login/otp/'.$user->id))->with('success', 'OTP sent successfully to your email.');
+
+        }
+        return redirect()->back()->with('error', 'User not found with this email.');
+
+    }
+
+        public function LoginOtp($id){
+        $user = User::find($id);
+    return view('auth.passwords.LoginOtp', compact('user'));
+    }
+
+
+
     public function dashboard(Request $request)
     {
         if (!Auth::user() || Auth::user()->role != 'admin') {
@@ -126,6 +167,12 @@ class AdminController extends Controller
             return redirect()->route('withdrawals')->with('success', 'Withdrawal status changed successfully');
         }
 
+    }
+
+    public function getUsers()
+    {
+        $users = User::where('role', 'user')->orderBy('id', 'desc')->get();
+        return view('admin.users.list', compact('users'));
     }
 
 

@@ -109,7 +109,7 @@
                 <table class="table table-bordered table-striped" id="depositsTable">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>#SR</th>
                             <th>User</th>
                             <th>Amount</th>
                             <th>Status</th>

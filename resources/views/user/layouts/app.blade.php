@@ -49,8 +49,8 @@
                 <img src="/assets/user/images/avatar1.jpg" alt="image" class="imaged w32 me-2">
             </a>
             <ul class="dropdown-menu dropdown-menu-end mt-2" aria-labelledby="settingsDropdown">
-                <li><a class="dropdown-item" href="app-settings.html"><i class="fas fa-cogs me-2"></i>Settings</a></li>
-                <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user me-2"></i>Profile</a></li>
+                {{-- <li><a class="dropdown-item" href="app-settings.html"><i class="fas fa-cogs me-2"></i>Settings</a></li> --}}
+                <li><a class="dropdown-item" href="{{route('user.profile')}}"><i class="fas fa-user me-2"></i>Profile</a></li>
                 <li>
                     <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="fas fa-sign-out-alt me-2"></i>Logout
