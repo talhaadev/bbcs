@@ -408,6 +408,10 @@
     })
     @endif
 </script>
-</body></html>
+<!-- Scripts -->
+
+    @stack('scripts')
+</body>
+</html>
 
 
