@@ -9,7 +9,8 @@
             <label for="phone" class="form-label">{{ __('Phone Number') }}</label>
             <input id="phone" type="text"
                    class="form-control"
-                   name="phone" placeholder="+923001234567"
+                   name="phone"
+                   placeholder="+923001234567"
                    required autofocus>
         </div>
 
@@ -30,78 +31,112 @@
 
         <div id="otp-status" class="mt-3 text-info"></div>
     </form>
+
+    <!-- ✅ Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+    <!-- ✅ OTP Logic -->
+    <script>
+        console.log("✅ Firebase OTP script loaded");
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const firebaseConfig = {
+                apiKey: "AIzaSyCOuLj-TkX4oownufWUmD0pRPrd5QZIkoc",
+                authDomain: "bbcs-616f4.firebaseapp.com",
+                projectId: "bbcs-616f4",
+                storageBucket: "bbcs-616f4.appspot.com",
+                messagingSenderId: "243392682929",
+                appId: "1:243392682929:web:7309d9a9ee5cb4b6d73b90"
+            };
+
+            firebase.initializeApp(firebaseConfig);
+
+            let confirmationResult;
+            const phoneInput = document.getElementById("phone");
+            const otpInput = document.getElementById("otp");
+            const statusBox = document.getElementById("otp-status");
+
+            // ✅ Setup reCAPTCHA
+            window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+                size: 'normal',
+                callback: function () {
+                    console.log("✅ reCAPTCHA verified");
+                },
+                'expired-callback': function () {
+                    console.warn("⚠️ reCAPTCHA expired");
+                }
+            });
+
+            recaptchaVerifier.render().then(function (widgetId) {
+                window.recaptchaWidgetId = widgetId;
+            });
+
+            // ✅ Send OTP
+            document.getElementById("send-otp-btn").addEventListener("click", function () {
+                const phone = phoneInput.value.trim();
+                const phoneRegex = /^\+[1-9]\d{7,14}$/; // E.164 format
+
+                if (!phoneRegex.test(phone)) {
+                    alert("❌ Invalid phone format. Example: +923001234567");
+                    return;
+                }
+
+                firebase.auth().signInWithPhoneNumber(phone, window.recaptchaVerifier)
+                    .then(result => {
+                        confirmationResult = result;
+                        statusBox.innerText = "✅ OTP sent to " + phone;
+                    })
+                    .catch(error => {
+                        console.error("❌ OTP send failed:", error);
+                        statusBox.innerText = "❌ " + error.message;
+                    });
+            });
+
+            // ✅ Verify OTP
+            document.getElementById("verify-otp-btn").addEventListener("click", function () {
+                const code = otpInput.value.trim();
+
+                if (!confirmationResult) {
+                    statusBox.innerText = "❌ Please send the OTP first.";
+                    return;
+                }
+
+                confirmationResult.confirm(code)
+                    .then(result => {
+                        statusBox.innerText = "✅ OTP Verified. Logging in...";
+
+                        const formattedPhone = phoneInput.value.replace('+', '');
+
+                        fetch("/otp-verified-login", {
+                            method: "POST",
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name=\"csrf-token\"]').getAttribute('content')
+                            },
+                            body: JSON.stringify({ phone_number: formattedPhone })
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.redirect) {
+                                    statusBox.innerText = "✅ Logged in. Redirecting...";
+                                    setTimeout(() => {
+                                        window.location.href = data.redirect;
+                                    }, 1000);
+                                } else {
+                                    statusBox.innerText = "⚠️ Login succeeded, but no redirect found.";
+                                }
+                            })
+                            .catch(error => {
+                                console.error("❌ Server error:", error);
+                                statusBox.innerText = "❌ " + error.message;
+                            });
+                    })
+                    .catch(error => {
+                        statusBox.innerText = "❌ Invalid OTP: " + error.message;
+                    });
+            });
+        });
+    </script>
 </div>
-
-<!-- Firebase SDKs -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // ✅ Firebase config
-        const firebaseConfig = {
-            apiKey: "AIzaSyCOuLj-TkX4oownufWUmD0pRPrd5QZIkoc",
-            authDomain: "bbcs-616f4.firebaseapp.com",
-            projectId: "bbcs-616f4",
-            storageBucket: "bbcs-616f4.firebasestorage.app",
-            messagingSenderId: "243392682929",
-            appId: "1:243392682929:web:7309d9a9ee5cb4b6d73b90",
-            measurementId: "G-FEVHV3STCB"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-
-        let confirmationResult;
-
-        const phoneInput = document.getElementById("phone");
-        const otpInput = document.getElementById("otp");
-        const statusBox = document.getElementById("otp-status");
-
-        document.getElementById("send-otp-btn").addEventListener("click", function () {
-            const phone = phoneInput.value;
-
-            if (!phone.startsWith('+')) {
-                alert("Please enter phone number in international format (e.g., +923001234567)");
-                return;
-            }
-
-            if (!window.recaptchaVerifier) {
-                window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-                    size: 'normal',
-                    callback: function () {}
-                });
-                window.recaptchaVerifier.render();
-            }
-
-            firebase.auth().signInWithPhoneNumber(phone, window.recaptchaVerifier)
-                .then(result => {
-                    confirmationResult = result;
-                    statusBox.innerText = "OTP sent to " + phone;
-                })
-                .catch(error => {
-                    statusBox.innerText = "" + error.message;
-                });
-        });
-
-        document.getElementById("verify-otp-btn").addEventListener("click", function () {
-            const code = otpInput.value;
-
-            if (!confirmationResult) {
-                statusBox.innerText = "Please send the OTP first.";
-                return;
-            }
-
-            confirmationResult.confirm(code)
-                .then(result => {
-                    statusBox.innerText = "OTP Verified. Redirecting...";
-                    setTimeout(() => {
-                        window.location.href = "/password/reset-phone"; // Adjust as needed
-                    }, 2000);
-                })
-                .catch(error => {
-                    statusBox.innerText = "Invalid OTP: " + error.message;
-                });
-        });
-    });
-</script>
 @endsection

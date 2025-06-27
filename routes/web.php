@@ -17,6 +17,7 @@ Route::get('/run-migrations', function () {
 });
 
 Auth::routes();
+Route::post('/otp-verified-login', [App\Http\Controllers\Auth\PhoneAuthController::class, 'handleOtpLogin']);
 
 
 Route::middleware(['auth', 'isAdmin'])->group(function () {
