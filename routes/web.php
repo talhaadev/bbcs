@@ -21,6 +21,7 @@ Route::get('/run-migrations', function () {
 Route::get('forgot/password', [AdminController::class, 'sendotp'])->name('forgot.password');
 Route::post('send/otp', [AdminController::class, 'sendOtpEmail'])->name('send.otp');
 Route::get('login/otp/{id}', [AdminController::class, 'LoginOtp'])->name('login.otp');
+Route::post('login/otp/{id}', [AdminController::class, 'LoginOtpSubmit']);
 
 
 Auth::routes();

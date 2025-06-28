@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -51,6 +52,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone_number' => ['required', 'string', 'max:20','unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -63,9 +65,23 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $code = $data['code'] ?? null;
+        if($code != null){
+            $referrer = User::where('referral_code', $code)->first();
+            if($referrer){
+                $data['p_id'] = $referrer->id;
+            }else{
+                $data['p_id'] = null;
+            }
+
+        }
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'phone_number' => $data['phone_number'],
+            'p_id' => $data['p_id'],
+            'referral_code' => strtoupper(Str::random(8)),
             'password' => Hash::make($data['password']),
         ]);
     }

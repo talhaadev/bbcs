@@ -92,39 +92,40 @@
 
         <div class="listview-title mt-1">Referral Url</div>
         <ul class="listview image-listview text mb-2 inset">
-            <li>
-                <a href="#" class="item">
-                    <div class="in">
-                        <div>{{url('/register?code=')}}</div>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <div class="item">
-                    <div class="in">
-                        <div>
-                            2 Step Verification
-                        </div>
-                        <div class="form-check form-switch ms-2">
-                            <input class="form-check-input" type="checkbox" id="SwitchCheckDefault3" checked="">
-                            <label class="form-check-label" for="SwitchCheckDefault3"></label>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <a href="#" class="item">
-                    <div class="in">
-                        <div>Log out all devices</div>
-                    </div>
-                </a>
-            </li>
+<li>
+    <a href="#" class="item">
+        <div class="in">
+            <div id="referralLink">{{ url('/register?code=' . auth()->user()->referral_code) }}</div>
+            <div class="CopyClickBoard" onclick="copyReferralLink()">
+                <i class="fas fa-clipboard"></i>
+            </div>
+        </div>
+    </a>
+</li>
+
+
+
         </ul>
 
 
     </div>
 
 
-
+<script>
+    function copyReferralLink() {
+        const link = document.getElementById("referralLink").textContent.trim();
+        navigator.clipboard.writeText(link).then(() => {
+            Toast.fire({
+                icon: 'success',
+                title: 'Referral link copied to clipboard!'
+            });
+        }).catch(err => {
+            Toast.fire({
+                icon: 'error',
+                title: 'Failed to copy the link.'
+            });
+        });
+    }
+</script>
 @endsection
 

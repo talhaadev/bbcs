@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('balance')->default(0);
             $table->string('referral_code')->nullable();
             $table->string('otp')->nullable();
+            $table->string('p_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

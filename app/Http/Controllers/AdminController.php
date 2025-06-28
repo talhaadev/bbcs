@@ -28,6 +28,7 @@ class AdminController extends Controller
             'email' => 'required|email|exists:users,email',
         ]);
 
+
         $user = User::where('email', $request->email)->first();
         if ($user) {
             // Generate a unique 6-digit OTP
@@ -35,7 +36,8 @@ class AdminController extends Controller
             $user->otp = $otp;
             $user->save();
            try {
-    Mail::to($user->email)->send(new SendOtpMail($otp));
+
+    Mail::to($request->email)->send(new SendOtpMail($otp));
 } catch (\Exception $e) {
     Log::error('Mail sending failed: ' . $e->getMessage());
     return redirect()->back()->with('error', 'Mail failed: ' . $e->getMessage());
@@ -50,6 +52,29 @@ class AdminController extends Controller
         public function LoginOtp($id){
         $user = User::find($id);
     return view('auth.passwords.LoginOtp', compact('user'));
+    }
+
+    public function LoginOtpSubmit(Request $request, $id)
+    {
+        $request->validate([
+            'otp' => 'required|digits:6',
+        ]);
+
+        $user = User::find($id);
+        if ($user && $user->otp == $request->otp) {
+            Auth::login($user);
+            // Clear OTP after successful login
+            $user->otp = null;
+            $user->save();
+            if($user->role == 'user'){
+           return redirect(url('user/dashboard'));
+            }else{
+             return redirect(url('admin/dashboard'));
+            }
+            return redirect()->route('dashboard');
+        }
+
+        return redirect()->back()->with('error', 'Invalid OTP. Please try again.');
     }
 
 
