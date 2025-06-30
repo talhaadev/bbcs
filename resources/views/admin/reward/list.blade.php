@@ -90,12 +90,12 @@
     <div class="col-12">
         <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-secondary p-3 text-white mb-2"
             style="color: white !important">
-            <h4 class="mb-sm-0 font-size-18" style="color: white !important">Users</h4>
+            <h4 class="mb-sm-0 font-size-18" style="color: white !important">Reward List</h4>
             {{-- {{ $errors }} --}}
             <div class="page-title-right">
                 <ol class="breadcrumb m-0 text-white">
                     <li class="breadcrumb-item"><a href="{{route('dashboard')}}" ript style="color: white !important">
-                            DASHBOARD </a> / Users</li>
+                            DASHBOARD </a> / Reward List</li>
                 </ol>
             </div>
         </div>
@@ -110,24 +110,21 @@
                     <thead>
                         <tr>
                             <th>#SR</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Mobile</th>
-                            <th>Balance</th>
+                            <th>User</th>
+                            <th>Amount</th>
+                            <th>Date</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($users as $ind => $user)
+                        @foreach($rewards as $ind => $reward)
                         <tr>
                             <td>{{ $ind + 1 }}</td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>{{ $user->phone_number }}</td>
-                            <td>$ {{ $user->balance }}</td>
+                            <td>{{ $reward->user->name }}</td>
+                            <td> $ {{ $reward->amount }}</td>
+                            <td>{{ $reward->created_at }}</td>
                             <td>
-                          <a href="{{ route('impersonate', $user->id) }}" class="btn btn-success">Login</a>
-                          <button class="btn btn-primary SetPercentageModel" data-bs-toggle="modal" url="{{url('/admin/set/percentage/'.$user->id)}}" percentage="{{$user->percentage}}" data-bs-target="#editUserModal">Set Percentage</button>
+                            -
                             </td>
                         </tr>
                         @endforeach

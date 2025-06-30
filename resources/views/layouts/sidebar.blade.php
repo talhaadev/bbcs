@@ -13,20 +13,26 @@
             <hr>
             <li>
                 <a href="{{ route('deposits') }}" class="waves-effect">
-                    <i class="fas fa-cogs"></i>
+                    <i class="fas fa-wallet"></i>
                     <span>Deposit Requests</span>
                 </a>
             </li>
             <li>
                 <a href="{{route('withdrawals')}}" class="waves-effect">
-                    <i class="fas fa-cogs"></i>
+                    <i class="fas fa-arrow-up"></i>
                     <span>Withdrawal Requests</span>
                 </a>
             </li>
             <li>
                 <a href="{{route('admin.users')}}" class="waves-effect">
-                    <i class="fas fa-cogs"></i>
+                    <i class="fas fa-users"></i>
                     <span>Users</span>
+                </a>
+            </li>
+              <li>
+                <a href="{{ route('admin.reward.list') }}" class="waves-effect">
+                    <i class="fas fa-cogs"></i>
+                    <span>Rewards</span>
                 </a>
             </li>
             <li>

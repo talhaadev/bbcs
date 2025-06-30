@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Deposit;
+use App\Models\Reward;
 use App\Models\Withdrawal;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\SendOtpMail;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Log;
 class AdminController extends Controller
 {
     use GlobalFunctionsTrait;
+
 
 
     public function sendotp(){
@@ -198,6 +200,28 @@ class AdminController extends Controller
     {
         $users = User::where('role', 'user')->orderBy('id', 'desc')->get();
         return view('admin.users.list', compact('users'));
+    }
+
+
+    public function setPercentage(Request $request, $id)
+    {
+        $request->validate([
+            'percentage' => 'required|numeric|min:0|max:100',
+        ]);
+
+        $user = User::find($id);
+        if ($user) {
+            $user->percentage = $request->percentage;
+            $user->save();
+            return redirect()->route('admin.users')->with('success', 'Reward percentage updated successfully');
+        }
+
+        return redirect()->route('admin.users')->with('error', 'User not found');
+    }
+    public function rewardlist()
+    {
+        $rewards = Reward::with('user')->orderBy('id', 'desc')->get();
+        return view('admin.reward.list', compact('rewards'));
     }
 
 

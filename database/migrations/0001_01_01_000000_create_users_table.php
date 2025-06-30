@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('referral_code')->nullable();
             $table->string('otp')->nullable();
             $table->string('p_id')->nullable();
+            $table->string('percentage')->default(0);
+            $table->string('get_reward')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

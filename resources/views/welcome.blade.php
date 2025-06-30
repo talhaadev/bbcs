@@ -4,7 +4,7 @@
     <title>Finances &mdash; Website Template by Colorlib</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <link rel="stylesheet" href="fonts/icomoon/style.css">
 
@@ -23,10 +23,10 @@
     <link rel="stylesheet" href="assets/front/css/aos.css">
 
     <link rel="stylesheet" href="assets/front/css/style.css">
-    
+
   </head>
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
-  
+
 
   <div id="overlayer"></div>
   <div class="loader">
@@ -46,13 +46,13 @@
       </div>
       <div class="site-mobile-menu-body"></div>
     </div>
-   
-    
+
+
     <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
 
       <div class="container">
         <div class="row align-items-center">
-          
+
           <div class="col-6 col-xl-2">
             <h1 class="mb-0 site-logo"><a href="index.html" class="h2 mb-0">Finances<span class="text-primary">.</span> </a></h1>
           </div>
@@ -81,13 +81,19 @@
                     </li>
                   </ul>
                 </li>
-                
-                
+
+
                 <li><a href="#blog-section" class="nav-link">Blog</a></li>
                 <li><a href="#contact-section" class="nav-link">Contact</a></li>
-                <li class="social"><a href="#contact-section" class="nav-link"><span class="icon-facebook"></span></a></li>
-                <li class="social"><a href="#contact-section" class="nav-link"><span class="icon-twitter"></span></a></li>
-                <li class="social"><a href="#contact-section" class="nav-link"><span class="icon-linkedin"></span></a></li>
+
+                @if (Auth::check())
+                @if(auth()->user()->role == 'admin')
+                  <li class="social"><a href="{{url('admin/dashboard')}}" class="nav-link btn btn-primary" style="padding:8px 10px;border-radius: 8px; color: white !important;">Dashboard</a></li>
+               @else
+                  <li class="social"><a href="{{url('user/get/reward/'.auth()->user()->id)}}" class="nav-link btn btn-success" style="padding:8px 10px;border-radius: 8px; color: white !important;">Daily Reward</a></li>
+                  <li class="social"><a href="{{url('user/dashboard')}}" class="nav-link btn btn-primary" style="padding:8px 10px;border-radius: 8px; color: white !important;">Dashboard</a></li>
+                @endif
+                @endif
               </ul>
             </nav>
           </div>
@@ -97,17 +103,17 @@
 
         </div>
       </div>
-      
+
     </header>
 
-  
-     
+
+
     <div class="site-blocks-cover overlay" style="background-image: url(assets/front/images/hero_2.jpg);" data-aos="fade" id="home-section">
 
       <div class="container">
         <div class="row align-items-center justify-content-center">
 
-          
+
           <div class="col-md-10 mt-lg-5 text-center">
             <div class="single-text owl-carousel">
               <div class="slide">
@@ -138,7 +144,7 @@
 
             </div>
           </div>
-            
+
         </div>
       </div>
 
@@ -147,7 +153,7 @@
           <span class="mouse-wheel"></span>
         </span>
       </a>
-    </div>  
+    </div>
 
 
     <div class="site-section cta-big-image" id="about-section">
@@ -165,17 +171,17 @@
             </figure>
           </div>
           <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="100">
-            
+
             <h3 class="text-black mb-4">We Solve Your Financial Problem</h3>
 
             <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
 
             <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-            
+
           </div>
-        </div>    
-        
-      </div>  
+        </div>
+
+      </div>
     </div>
 
     <div class="site-section" id="next">
@@ -209,29 +215,29 @@
             <div class="mb-4">
               <h3 class="h3 mb-4 text-black">Banking Solutions Is Our Priority</h3>
               <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-              
+
             </div>
-              
+
             <div class="mb-4">
               <ul class="list-unstyled ul-check success">
                 <li>Officia quaerat eaque neque</li>
                 <li>Lorem ipsum dolor sit amet</li>
                 <li>Consectetur adipisicing elit</li>
               </ul>
-              
+
             </div>
 
-            
-            
-            
+
+
+
           </div>
         </div>
       </div>
     </div>
 
-    
 
-    
+
+
     <section class="site-section border-bottom" id="team-section">
       <div class="container">
         <div class="row mb-5 justify-content-center">
@@ -241,9 +247,9 @@
           </div>
         </div>
         <div class="row">
-          
 
-          
+
+
           <div class="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="">
             <div class="team-member">
               <figure>
@@ -298,14 +304,14 @@
             </div>
           </div>
 
-          
-          
+
+
         </div>
       </div>
     </section>
 
     <section class="site-section" id="gallery-section" data-aos="fade">
-      
+
 
       <div class="container">
 
@@ -315,8 +321,8 @@
           </div>
         </div>
 
-        
-        
+
+
         <div id="posts" class="row no-gutter">
           <div class="item web col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-4">
             <a href="images/img_1.jpg" class="item-wrap fancybox">
@@ -403,7 +409,7 @@
             </a>
           </div>
 
-          
+
         </div>
       </div>
 
@@ -419,7 +425,7 @@
             <p class="lead" data-aos="fade-up" data-aos-delay="100">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas fugiat molestiae eligendi repudiandae error?</p>
           </div>
         </div>
-        
+
         <div class="row align-items-lg-center" >
           <div class="col-lg-6 mb-5" data-aos="fade-up" data-aos-delay="">
 
@@ -434,7 +440,7 @@
 
           </div>
           <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="100">
-            
+
             <div class="owl-carousel slide-one-item-alt-text">
               <div>
                 <h2 class="section-title mb-3">01. Online Applications</h2>
@@ -454,16 +460,16 @@
 
                 <p><a href="#" class="btn btn-primary mr-2 mb-2">Learn More</a></p>
               </div>
-              
+
             </div>
-            
+
           </div>
         </div>
       </div>
     </section>
 
-    
-    
+
+
 
     <section class="site-section border-bottom bg-light" id="services-section">
       <div class="container">
@@ -563,7 +569,7 @@
       <div class="slide-one-item home-slider owl-carousel">
           <div>
             <div class="testimonial">
-              
+
               <blockquote class="mb-5">
                 <p>&ldquo;Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deleniti tenetur ad perspiciatis quam atque eius quia suscipit repudiandae animi voluptatem.&rdquo;</p>
               </blockquote>
@@ -584,7 +590,7 @@
                 <div><img src="assets/front/images/person_2.jpg" alt="Image" class="w-50 img-fluid mb-3"></div>
                 <p>Christine Aguilar</p>
               </figure>
-              
+
             </div>
           </div>
 
@@ -599,7 +605,7 @@
                 <p>Robert Spears</p>
               </figure>
 
-              
+
             </div>
           </div>
 
@@ -635,7 +641,7 @@
                 <span><span>$47</span> / year</span>
               </div>
               <ul class="list-unstyled ul-check success mb-5">
-                
+
                 <li>Officia quaerat eaque neque</li>
                 <li>Possimus aut consequuntur incidunt</li>
                 <li class="remove">Lorem ipsum dolor sit amet</li>
@@ -655,7 +661,7 @@
                 <span><span>$200</span> / year</span>
               </div>
               <ul class="list-unstyled ul-check success mb-5">
-                
+
                 <li>Officia quaerat eaque neque</li>
                 <li>Possimus aut consequuntur incidunt</li>
                 <li>Lorem ipsum dolor sit amet</li>
@@ -675,7 +681,7 @@
                 <span><span>$750</span> / year</span>
               </div>
               <ul class="list-unstyled ul-check success mb-5">
-                
+
                 <li>Officia quaerat eaque neque</li>
                 <li>Possimus aut consequuntur incidunt</li>
                 <li>Lorem ipsum dolor sit amet</li>
@@ -688,7 +694,7 @@
             </div>
           </div>
         </div>
-        
+
         <div class="row site-section" id="faq-section">
           <div class="col-12 text-center" data-aos="fade">
             <h2 class="section-title">Frequently Ask Questions</h2>
@@ -696,12 +702,12 @@
         </div>
         <div class="row">
           <div class="col-lg-6">
-            
+
             <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
             <h3 class="text-black h4 mb-4">Can I accept both Paypal and Stripe?</h3>
             <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
             </div>
-            
+
             <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
               <h3 class="text-black h4 mb-4">What available is refund period?</h3>
               <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
@@ -711,7 +717,7 @@
             <h3 class="text-black h4 mb-4">Can I accept both Paypal and Stripe?</h3>
             <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
             </div>
-            
+
             <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
               <h3 class="text-black h4 mb-4">What available is refund period?</h3>
               <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
@@ -723,7 +729,7 @@
               <h3 class="text-black h4 mb-4">Where are you from?</h3>
               <p>Voluptatum nobis obcaecati perferendis dolor totam unde dolores quod maxime corporis officia et. Distinctio assumenda minima maiores.</p>
             </div>
-            
+
             <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
               <h3 class="text-black h4 mb-4">What is your opening time?</h3>
               <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
@@ -733,7 +739,7 @@
             <h3 class="text-black h4 mb-4">Can I accept both Paypal and Stripe?</h3>
             <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
             </div>
-            
+
             <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
               <h3 class="text-black h4 mb-4">What available is refund period?</h3>
               <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
@@ -753,12 +759,12 @@
             </figure>
           </div>
           <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="100">
-            
+
 
             <div class="row">
 
-              
-              
+
+
               <div class="col-12 mb-4" data-aos="fade-up" data-aos-delay="">
                 <div class="unit-4 d-flex">
                   <div class="unit-4-icon mr-4 mb-3"><span class="text-primary flaticon-head"></span></div>
@@ -782,16 +788,16 @@
             </div>
 
 
-            
+
           </div>
         </div>
 
-        
+
       </div>
     </section>
-  
-    
-    
+
+
+
 
     <section class="site-section" id="blog-section">
       <div class="container">
@@ -811,7 +817,7 @@
               <div class="meta mb-4">Ham Brook <span class="mx-2">&bullet;</span> Jan 18, 2019<span class="mx-2">&bullet;</span> <a href="#">News</a></div>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus eligendi nobis ea maiores sapiente veritatis reprehenderit suscipit quaerat rerum voluptatibus a eius.</p>
               <p><a href="#">Continue Reading...</a></p>
-            </div> 
+            </div>
           </div>
           <div class="col-md-6 col-lg-4 mb-4 mb-lg-4" data-aos="fade-up" data-aos-delay="100">
             <div class="h-entry">
@@ -833,14 +839,14 @@
               <div class="meta mb-4">James Phelps <span class="mx-2">&bullet;</span> Jan 18, 2019<span class="mx-2">&bullet;</span> <a href="#">News</a></div>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus eligendi nobis ea maiores sapiente veritatis reprehenderit suscipit quaerat rerum voluptatibus a eius.</p>
               <p><a href="#">Continue Reading...</a></p>
-            </div> 
+            </div>
           </div>
-          
+
         </div>
       </div>
     </section>
 
-   
+
 
 
     <section class="site-section bg-light" id="contact-section" data-aos="fade">
@@ -851,7 +857,7 @@
           </div>
         </div>
         <div class="row mb-5">
-          
+
 
 
           <div class="col-md-4 text-center">
@@ -876,11 +882,11 @@
         <div class="row">
           <div class="col-md-12 mb-5">
 
-            
+
 
             <form action="#" class="p-5 bg-white">
-              
-              <h2 class="h4 text-black mb-5">Contact Form</h2> 
+
+              <h2 class="h4 text-black mb-5">Contact Form</h2>
 
               <div class="row form-group">
                 <div class="col-md-6 mb-3 mb-md-0">
@@ -894,24 +900,24 @@
               </div>
 
               <div class="row form-group">
-                
+
                 <div class="col-md-12">
-                  <label class="text-black" for="email">Email</label> 
+                  <label class="text-black" for="email">Email</label>
                   <input type="email" id="email" class="form-control">
                 </div>
               </div>
 
               <div class="row form-group">
-                
+
                 <div class="col-md-12">
-                  <label class="text-black" for="subject">Subject</label> 
+                  <label class="text-black" for="subject">Subject</label>
                   <input type="subject" id="subject" class="form-control">
                 </div>
               </div>
 
               <div class="row form-group">
                 <div class="col-md-12">
-                  <label class="text-black" for="message">Message</label> 
+                  <label class="text-black" for="message">Message</label>
                   <textarea name="message" id="message" cols="30" rows="7" class="form-control" placeholder="Write your notes or questions here..."></textarea>
                 </div>
               </div>
@@ -922,15 +928,15 @@
                 </div>
               </div>
 
-  
+
             </form>
           </div>
-          
+
         </div>
       </div>
     </section>
 
-    
+
     <footer class="site-footer">
       <div class="container">
         <div class="row">
@@ -981,10 +987,10 @@
                 with <i class="icon-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
               </p>
               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-        
+
             </div>
           </div>
-          
+
         </div>
       </div>
     </footer>
@@ -1002,10 +1008,44 @@
   <script src="assets/front/js/jquery.fancybox.min.js"></script>
   <script src="assets/front/js/jquery.sticky.js"></script>
   <script src="assets/front/js/isotope.pkgd.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
-  
+
   <script src="assets/front/js/main.js"></script>
+  <script>
+    let Toast = Swal.mixin({
+        toast: true,
+        position: 'top-right',
+        showConfirmButton: false,
+        timer: 3000,
+        showCloseButton: true,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+    @if(session()->has('success'))
+    Toast.fire({
+        icon: 'success',
+        title: '{{ session()->get('success') }}'
+    })
+    @endif
+    @if(session()->has('warning'))
+    Toast.fire({
+        icon: 'v',
+        title: '{{ session()->get('warning') }}'
+    })
+    @endif
+    @if(session()->has('error'))
+    Toast.fire({
+        icon: 'error',
+        title: '{{ session()->get('error') }}'
+    })
+    @endif
+</script>
 
-  
+
   </body>
 </html>

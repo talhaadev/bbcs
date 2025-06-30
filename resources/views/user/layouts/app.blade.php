@@ -39,14 +39,14 @@
             </a>
         </div>
         <div class="right">
-            <a href="app-notifications.html" class="headerButton">
+            {{-- <a href="app-notifications.html" class="headerButton">
                 <i class="fas fa-bell icon"></i>
                 <span class="badge badge-danger">4</span>
-            </a>
+            </a> --}}
             <div class="dropdown">
                 <a href="#" class="headerButton dropdown-toggle d-flex align-items-center" id="settingsDropdown"
                 data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="/assets/user/images/avatar1.jpg" alt="image" class="imaged w32 me-2">
+                <img src="/assets/user/images/avatar1.jpg" alt="image" class="imaged w32 ">
             </a>
             <ul class="dropdown-menu dropdown-menu-end mt-2" aria-labelledby="settingsDropdown">
                 {{-- <li><a class="dropdown-item" href="app-settings.html"><i class="fas fa-cogs me-2"></i>Settings</a></li> --}}
@@ -71,37 +71,28 @@
 
 <!-- App Bottom Menu -->
 <div class="appBottomMenu">
-    <a href="index.html" class="item active">
+    <a href="{{ url('user/dashboard') }}" class="item {{ Request::is('user/dashboard') ? 'active' : '' }}">
         <div class="col">
             <i class="fas fa-chart-pie fa-2x"></i>
-            <strong>Overview</strong>
+            <strong>Dashboard</strong>
         </div>
     </a>
-    <a href="app-pages.html" class="item">
+
+    <a href="{{ url('user/deposits') }}" class="item {{ Request::is('user/deposits') ? 'active' : '' }}">
         <div class="col">
-            <i class="fas fa-file-alt fa-2x"></i>
-            <strong>Pages</strong>
+            <i class="fas fa-arrow-down fa-2x"></i>
+            <strong>Deposits</strong>
         </div>
     </a>
-    <a href="app-components.html" class="item">
+
+    <a href="{{ url('user/withdrawl') }}" class="item {{ Request::is('user/withdrawl') ? 'active' : '' }}">
         <div class="col">
-            <i class="fas fa-th fa-2x"></i>
-            <strong>Components</strong>
-        </div>
-    </a>
-    <a href="app-cards.html" class="item">
-        <div class="col">
-            <i class="fas fa-credit-card fa-2x"></i>
-            <strong>My Cards</strong>
-        </div>
-    </a>
-    <a href="app-settings.html" class="item">
-        <div class="col">
-            <i class="fas fa-cog fa-2x"></i>
-            <strong>Settings</strong>
+            <i class="fas fa-arrow-up fa-2x"></i>
+            <strong>Withdraw</strong>
         </div>
     </a>
 </div>
+
 
 <!-- * App Bottom Menu -->
 

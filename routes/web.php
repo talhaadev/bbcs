@@ -66,6 +66,8 @@ Route::get('/stop-impersonate', function () {
 
 
     Route::get('/admin/users', [AdminController::class, 'getUsers'])->name('admin.users');
+    Route::get('/admin/reward/list', [AdminController::class, 'rewardlist'])->name('admin.reward.list');
+    Route::post('/admin/set/percentage/{id}', [AdminController::class, 'setPercentage'])->name('set.percentage');
 });
 
 Route::middleware(['auth', 'isUser'])->group(function () {
@@ -79,4 +81,5 @@ Route::middleware(['auth', 'isUser'])->group(function () {
     Route::get('user/withdrawl', [WithdrawalController::class, 'withdrawl'])->name('user.withdrawl');
     Route::get('user/create/withdrawl', [WithdrawalController::class, 'create'])->name('user.create.withdrawl');
     Route::post('user/store/withdrawl', [WithdrawalController::class, 'store'])->name('user.store.withdrawl');
+    Route::get('user/get/reward/{id}', [UserDashboardController::class, 'getReward'])->name('user.get.reward');
 });
