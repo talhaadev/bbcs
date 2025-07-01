@@ -1,11 +1,11 @@
 @extends('user.layouts.app')
 @section('content')
-<style>
-    .image-listview>li a.item:after{
-        display: none;
-    }
-</style>
-<div id="appCapsule">
+    <style>
+        .image-listview>li a.item:after {
+            display: none;
+        }
+    </style>
+    <div id="appCapsule">
 
         <div class="section mt-3 text-center">
             <div class="avatar-section">
@@ -67,7 +67,7 @@
                 <a href="#" class="item">
                     <div class="in">
                         <div>Name</div>
-                        <div>{{auth()->user()->name}}</div>
+                        <div>{{ auth()->user()->name }}</div>
                     </div>
                 </a>
             </li>
@@ -75,7 +75,7 @@
                 <a href="#" class="item">
                     <div class="in">
                         <div>Email</div>
-                        <div>{{auth()->user()->email}}</div>
+                        <div>{{ auth()->user()->email }}</div>
                     </div>
                 </a>
             </li>
@@ -83,7 +83,7 @@
                 <a href="#" class="item">
                     <div class="in">
                         <div>Mobile</div>
-                         <div> +{{auth()->user()->phone_number}}</div>
+                        <div> +{{ auth()->user()->phone_number }}</div>
                     </div>
                 </a>
             </li>
@@ -92,40 +92,44 @@
 
         <div class="listview-title mt-1">Referral Url</div>
         <ul class="listview image-listview text mb-2 inset">
-<li>
-    <a href="#" class="item">
-        <div class="in">
-            <div id="referralLink">{{ url('/register?code=' . auth()->user()->referral_code) }}</div>
-            <div class="CopyClickBoard" onclick="copyReferralLink()">
-                <i class="fas fa-clipboard"></i>
-            </div>
-        </div>
-    </a>
-</li>
+            <li>
+                <a href="#" class="item">
+                    <div class="in">
+                        <div id="referralLink">{{ url('/register?code=' . auth()->user()->referral_code) }}</div>
+                        <div class="CopyClickBoard" onclick="copyReferralLink()">
+                            <i class="fas fa-clipboard"></i>
+                        </div>
+                    </div>
+                </a>
+            </li>
 
 
 
         </ul>
 
 
+        <a href="{{ url('user/profile/update') }}" class="bg-red-500 text-white px-4 py-2 rounded inline-block hover:bg-red-600 transition">
+            Update
+        </a>
+
+
     </div>
 
 
-<script>
-    function copyReferralLink() {
-        const link = document.getElementById("referralLink").textContent.trim();
-        navigator.clipboard.writeText(link).then(() => {
-            Toast.fire({
-                icon: 'success',
-                title: 'Referral link copied to clipboard!'
+    <script>
+        function copyReferralLink() {
+            const link = document.getElementById("referralLink").textContent.trim();
+            navigator.clipboard.writeText(link).then(() => {
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Referral link copied to clipboard!'
+                });
+            }).catch(err => {
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Failed to copy the link.'
+                });
             });
-        }).catch(err => {
-            Toast.fire({
-                icon: 'error',
-                title: 'Failed to copy the link.'
-            });
-        });
-    }
-</script>
+        }
+    </script>
 @endsection
-

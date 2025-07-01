@@ -20,8 +20,9 @@ class AdminController extends Controller
 
 
 
-    public function sendotp(){
-     return view('auth.passwords.email');
+    public function sendotp()
+    {
+        return view('auth.passwords.email');
     }
 
     public function sendOtpEmail(Request $request)
@@ -37,23 +38,22 @@ class AdminController extends Controller
             $otp = rand(100000, 999999);
             $user->otp = $otp;
             $user->save();
-           try {
+            try {
 
-    Mail::to($request->email)->send(new SendOtpMail($otp));
-} catch (\Exception $e) {
-    Log::error('Mail sending failed: ' . $e->getMessage());
-    return redirect()->back()->with('error', 'Mail failed: ' . $e->getMessage());
-}
-            return redirect(url('login/otp/'.$user->id))->with('success', 'OTP sent successfully to your email.');
-
+                Mail::to($request->email)->send(new SendOtpMail($otp));
+            } catch (\Exception $e) {
+                Log::error('Mail sending failed: ' . $e->getMessage());
+                return redirect()->back()->with('error', 'Mail failed: ' . $e->getMessage());
+            }
+            return redirect(url('login/otp/' . $user->id))->with('success', 'OTP sent successfully to your email.');
         }
         return redirect()->back()->with('error', 'User not found with this email.');
-
     }
 
-        public function LoginOtp($id){
+    public function LoginOtp($id)
+    {
         $user = User::find($id);
-    return view('auth.passwords.LoginOtp', compact('user'));
+        return view('auth.passwords.LoginOtp', compact('user'));
     }
 
     public function LoginOtpSubmit(Request $request, $id)
@@ -68,10 +68,10 @@ class AdminController extends Controller
             // Clear OTP after successful login
             $user->otp = null;
             $user->save();
-            if($user->role == 'user'){
-           return redirect(url('user/dashboard'));
-            }else{
-             return redirect(url('admin/dashboard'));
+            if ($user->role == 'user') {
+                return redirect(url('user/dashboard'));
+            } else {
+                return redirect(url('admin/dashboard'));
             }
             return redirect()->route('dashboard');
         }
@@ -154,13 +154,13 @@ class AdminController extends Controller
         return view('admin.deposits', compact('deposits'));
     }
 
-        public function getwithdrawals()
+    public function getwithdrawals()
     {
         $withdrawals = Withdrawal::with('user')->orderBy('id', 'desc')->get();
         return view('admin.withdrawals', compact('withdrawals'));
     }
 
-    public function ChangedepositStatus(Request $request,$id)
+    public function ChangedepositStatus(Request $request, $id)
     {
         $deposit = Deposit::find($id);
         $user = User::find($deposit->user_id);
@@ -173,14 +173,13 @@ class AdminController extends Controller
             $deposit->save();
             return redirect()->route('deposits')->with('success', 'Deposit status changed successfully');
         }
-
     }
 
-        public function ChangedwithdrawalStatus(Request $request,$id)
+    public function ChangedwithdrawalStatus(Request $request, $id)
     {
         $withdrawal = Withdrawal::find($id);
         $user = User::find($withdrawal->user_id);
-        if($withdrawal->amount > $user->balance) {
+        if ($withdrawal->amount > $user->balance) {
             return redirect()->route('withdrawals')->with('error', 'Insufficient balance for this withdrawal');
         }
         if ($withdrawal) {
@@ -193,7 +192,6 @@ class AdminController extends Controller
             $withdrawal->save();
             return redirect()->route('withdrawals')->with('success', 'Withdrawal status changed successfully');
         }
-
     }
 
     public function getUsers()
@@ -223,8 +221,4 @@ class AdminController extends Controller
         $rewards = Reward::with('user')->orderBy('id', 'desc')->get();
         return view('admin.reward.list', compact('rewards'));
     }
-
-
-
-
 }

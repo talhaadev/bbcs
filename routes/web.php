@@ -7,6 +7,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\WithdrawalController;
+use App\Http\Controllers\Auth\PurchaseController;
+use App\Http\Controllers\Auth\profileupodatecontroller;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,29 +32,29 @@ Route::post('/otp-verified-login', [App\Http\Controllers\Auth\PhoneAuthControlle
 Route::middleware(['auth', 'isAdmin'])->group(function () {
 
     Route::get('/impersonate/{id}', function ($id) {
-    $admin = Auth::user();
+        $admin = Auth::user();
 
-    // Ensure only admins can impersonate
-    if ($admin->role === 'admin') {
-        session(['impersonate' => $admin->id]); // Save current admin ID
-        Auth::loginUsingId($id); // Switch to target user
-        return redirect('user/dashboard'); // Redirect to user dashboard or home
-    }
+        // Ensure only admins can impersonate
+        if ($admin->role === 'admin') {
+            session(['impersonate' => $admin->id]); // Save current admin ID
+            Auth::loginUsingId($id); // Switch to target user
+            return redirect('user/dashboard'); // Redirect to user dashboard or home
+        }
 
-    abort(403, 'Unauthorized action.');
-})->name('impersonate');
+        abort(403, 'Unauthorized action.');
+    })->name('impersonate');
 
-// Stop impersonation
-Route::get('/stop-impersonate', function () {
-    if (session()->has('impersonate')) {
-        $adminId = session('impersonate');
-        Auth::loginUsingId($adminId); // Switch back to admin
-        session()->forget('impersonate');
-        return redirect('/admin-dashboard'); // Redirect to admin panel
-    }
+    // Stop impersonation
+    Route::get('/stop-impersonate', function () {
+        if (session()->has('impersonate')) {
+            $adminId = session('impersonate');
+            Auth::loginUsingId($adminId); // Switch back to admin
+            session()->forget('impersonate');
+            return redirect('/admin-dashboard'); // Redirect to admin panel
+        }
 
-    return redirect('/');
-})->name('stop.impersonate');
+        return redirect('/');
+    })->name('stop.impersonate');
 
 
     Route::get('admin/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
@@ -64,6 +66,8 @@ Route::get('/stop-impersonate', function () {
     Route::get('/admin/withdrawals', [AdminController::class, 'getwithdrawals'])->name('withdrawals');
     Route::get('/admin/withdrawal/status/{id}', [AdminController::class, 'ChangedwithdrawalStatus']);
 
+
+    Route::get('/admin/purchases', [PurchaseController::class,  'index'])->name('purchases');
 
     Route::get('/admin/users', [AdminController::class, 'getUsers'])->name('admin.users');
     Route::get('/admin/reward/list', [AdminController::class, 'rewardlist'])->name('admin.reward.list');
@@ -82,4 +86,9 @@ Route::middleware(['auth', 'isUser'])->group(function () {
     Route::get('user/create/withdrawl', [WithdrawalController::class, 'create'])->name('user.create.withdrawl');
     Route::post('user/store/withdrawl', [WithdrawalController::class, 'store'])->name('user.store.withdrawl');
     Route::get('user/get/reward/{id}', [UserDashboardController::class, 'getReward'])->name('user.get.reward');
+
+    Route::get('user/purchase', [PurchaseController::class, 'purchase'])->name('user.purchase');
+    Route::post('user/purchase/store', [PurchaseController::class, 'store'])->name('purchase.store');
+
+    Route::get('user/profile/update', [profileupodatecontroller::class, 'update'])->name('user.profile.update');
 });

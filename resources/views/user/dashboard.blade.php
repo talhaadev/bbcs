@@ -1,161 +1,161 @@
 @extends('user.layouts.app')
 @section('content')
-<style>
-.plan-card {
-    border: 2px solid #e9ecef;
-    border-radius: 15px;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
+    <style>
+        .plan-card {
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
 
-.plan-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
+        .plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
 
-.plan-popular {
-    border-color: #28a745;
-    transform: scale(1.05);
-}
+        .plan-popular {
+            border-color: #28a745;
+            transform: scale(1.05);
+        }
 
-.popular-badge {
-    position: absolute;
-    top: -2px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(45deg, #28a745, #20c997);
-    color: white;
-    padding: 5px 20px;
-    border-radius: 0 0 15px 15px;
-    font-size: 12px;
-    font-weight: bold;
-}
+        .popular-badge {
+            position: absolute;
+            top: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            padding: 5px 20px;
+            border-radius: 0 0 15px 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
 
-.plan-icon .icon-wrapper {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    font-size: 24px;
-    color: white;
-}
+        .plan-icon .icon-wrapper {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            font-size: 24px;
+            color: white;
+        }
 
-.plan-title {
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 15px;
-}
+        .plan-title {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+        }
 
-.plan-price {
-    margin-bottom: 20px;
-}
+        .plan-price {
+            margin-bottom: 20px;
+        }
 
-.plan-price .currency {
-    font-size: 18px;
-    vertical-align: top;
-    color: #666;
-}
+        .plan-price .currency {
+            font-size: 18px;
+            vertical-align: top;
+            color: #666;
+        }
 
-.plan-price .amount {
-    font-size: 36px;
-    font-weight: 700;
-    color: #333;
-}
+        .plan-price .amount {
+            font-size: 36px;
+            font-weight: 700;
+            color: #333;
+        }
 
-.plan-price .period {
-    font-size: 14px;
-    color: #666;
-    vertical-align: bottom;
-}
+        .plan-price .period {
+            font-size: 14px;
+            color: #666;
+            vertical-align: bottom;
+        }
 
-.plan-features {
-    text-align: left;
-    padding-left: 0;
-}
+        .plan-features {
+            text-align: left;
+            padding-left: 0;
+        }
 
-.plan-features li {
-    padding: 8px 0;
-    font-size: 14px;
-}
+        .plan-features li {
+            padding: 8px 0;
+            font-size: 14px;
+        }
 
-.btn-block {
-    width: 100%;
-    padding: 12px;
-    font-weight: 600;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-}
+        .btn-block {
+            width: 100%;
+            padding: 12px;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
 
-.btn-outline-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,123,255,0.3);
-}
+        .btn-outline-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+        }
 
-.btn-success:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(40,167,69,0.3);
-}
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
 
-.btn-warning:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255,193,7,0.3);
-    color: #333;
-}
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+            color: #333;
+        }
 
-@media (max-width: 768px) {
-    .plan-popular {
-        transform: none;
-        margin-top: 20px;
-    }
+        @media (max-width: 768px) {
+            .plan-popular {
+                transform: none;
+                margin-top: 20px;
+            }
 
-    .plan-card {
-        margin-bottom: 20px;
-    }
-}
-</style>
+            .plan-card {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
 
-<!-- App Capsule -->
-<div id="appCapsule">
+    <!-- App Capsule -->
+    <div id="appCapsule">
 
-    <!-- Wallet Card -->
-    <div class="section wallet-card-section pt-1">
-        <div class="wallet-card">
-            <!-- Balance -->
-            <div class="balance">
-                <div class="left">
-                    <span class="title">Total Balance</span>
-                    <h1 class="total">$ {{auth()->user()->balance}}</h1>
-                </div>
-                {{-- <div class="right">
+        <!-- Wallet Card -->
+        <div class="section wallet-card-section pt-1">
+            <div class="wallet-card">
+                <!-- Balance -->
+                <div class="balance">
+                    <div class="left">
+                        <span class="title">Total Balance</span>
+                        <h1 class="total">$ {{ auth()->user()->balance }}</h1>
+                    </div>
+                    {{-- <div class="right">
                     <a href="#" class="button" data-bs-toggle="modal" data-bs-target="#depositActionSheet">
                         <i class="fas fa-plus"></i>
                     </a>
                 </div> --}}
-            </div>
-            <!-- * Balance -->
-            <!-- Wallet Footer -->
-            <div class="wallet-footer">
-                <div class="item">
-                    <a href="{{route('user.deposits')}}" >
-                        <div class="icon-wrapper bg-danger">
-                            <i class="fas fa-arrow-down"></i>
-                        </div>
-                        <strong>Deposit</strong>
-                    </a>
                 </div>
-                <div class="item">
-                    <a href="{{route('user.withdrawl')}}" >
-                        <div class="icon-wrapper bg-success">
-                            <i class="fas fa-arrow-up"></i>
-                        </div>
-                        <strong>Withdraw</strong>
-                    </a>
-                </div>
-                {{-- <div class="item">
+                <!-- * Balance -->
+                <!-- Wallet Footer -->
+                <div class="wallet-footer">
+                    <div class="item">
+                        <a href="{{ route('user.deposits') }}">
+                            <div class="icon-wrapper bg-danger">
+                                <i class="fas fa-arrow-down"></i>
+                            </div>
+                            <strong>Deposit</strong>
+                        </a>
+                    </div>
+                    <div class="item">
+                        <a href="{{ route('user.withdrawl') }}">
+                            <div class="icon-wrapper bg-success">
+                                <i class="fas fa-arrow-up"></i>
+                            </div>
+                            <strong>Withdraw</strong>
+                        </a>
+                    </div>
+                    {{-- <div class="item">
                     <a href="#" data-bs-toggle="modal" data-bs-target="#sendActionSheet">
                         <div class="icon-wrapper">
                             <i class="fas fa-arrow-right"></i>
@@ -180,14 +180,14 @@
                     </a>
                 </div> --}}
 
+                </div>
+                <!-- * Wallet Footer -->
             </div>
-            <!-- * Wallet Footer -->
         </div>
-    </div>
-    <!-- Wallet Card -->
+        <!-- Wallet Card -->
 
-    <!-- Deposit Action Sheet -->
-    {{-- <div class="modal fade action-sheet" id="depositActionSheet" tabindex="-1" role="dialog">
+        <!-- Deposit Action Sheet -->
+        {{-- <div class="modal fade action-sheet" id="depositActionSheet" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -225,10 +225,10 @@
             </div>
         </div>
     </div> --}}
-    <!-- * Deposit Action Sheet -->
+        <!-- * Deposit Action Sheet -->
 
-    <!-- Withdraw Action Sheet -->
-    {{-- <div class="modal fade action-sheet" id="withdrawActionSheet" tabindex="-1" role="dialog">
+        <!-- Withdraw Action Sheet -->
+        {{-- <div class="modal fade action-sheet" id="withdrawActionSheet" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -275,10 +275,10 @@
             </div>
         </div>
     </div> --}}
-    <!-- * Withdraw Action Sheet -->
+        <!-- * Withdraw Action Sheet -->
 
-    <!-- Send Action Sheet -->
-    {{-- <div class="modal fade action-sheet" id="sendActionSheet" tabindex="-1" role="dialog">
+        <!-- Send Action Sheet -->
+        {{-- <div class="modal fade action-sheet" id="sendActionSheet" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -325,10 +325,10 @@
             </div>
         </div>
     </div> --}}
-    <!-- * Send Action Sheet -->
+        <!-- * Send Action Sheet -->
 
-    <!-- Exchange Action Sheet -->
-    {{-- <div class="modal fade action-sheet" id="exchangeActionSheet" tabindex="-1" role="dialog">
+        <!-- Exchange Action Sheet -->
+        {{-- <div class="modal fade action-sheet" id="exchangeActionSheet" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -385,101 +385,106 @@
             </div>
         </div>
     </div> --}}
-    <!-- * Exchange Action Sheet -->
+        <!-- * Exchange Action Sheet -->
 
-    <!-- Stats -->
-    <div class="section">
-        <div class="row mt-2">
-            <div class="col-6">
-                <div class="stat-box">
-                    <div class="title">Total Deposit</div>
-                    <div class="value text-success">$ {{$totalDeposit}}</div>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="stat-box">
-                    <div class="title">Total Withdrawals</div>
-                    <div class="value text-danger">$ {{$totalWithdrawal}}</div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <!-- * Stats -->
-@if(count($users) > 0)
-    <!-- Transactions -->
-    <div class="section mt-4">
-        <div class="section-heading">
-            <h2 class="title">Teams</h2>
-
-        </div>
-        <div class="transactions">
-            @foreach ($users as $user)
-            <a href="app-transaction-detail.html" class="item">
-                <div class="detail">
-                    <img src="/assets/user/images/avatar3.jpg" alt="img" class="image-block imaged w48">
-                    <div>
-                        <strong>{{@$user->name}}</strong>
-                        <p>{{@$user->email}}</p>
-                        <p>+ {{@$user->phone_number}}</p>
+        <!-- Stats -->
+        <div class="section">
+            <div class="row mt-2">
+                <div class="col-6">
+                    <div class="stat-box">
+                        <div class="title">Total Deposit</div>
+                        <div class="value text-success">$ {{ $totalDeposit }}</div>
                     </div>
                 </div>
-                <div class="right">
-                    <div class="price "> $ {{@$user->balance}}</div>
+                <div class="col-6">
+                    <div class="stat-box">
+                        <div class="title">Total Withdrawals</div>
+                        <div class="value text-danger">$ {{ $totalWithdrawal }}</div>
+                    </div>
                 </div>
-            </a>
-            @endforeach
-
-
+            </div>
 
         </div>
-    </div>
-    <!-- * Transactions -->
-@endif
+        <!-- * Stats -->
+        @if (count($users) > 0)
+            <!-- Transactions -->
+            <div class="section mt-4">
+                <div class="section-heading">
+                    <h2 class="title">Teams</h2>
 
-@if(count($plans) > 0)
-<!-- Plans Section -->
-<div class="section mt-4">
-    <div class="section-heading">
-        <h2 class="title">Plans</h2>
-
-    </div>
-
-    <div class="row">
-       @foreach ($plans as $plan)
-       <div class="col-12 col-md-4 mb-3">
-           <div class="card plan-card">
-               <div class="card-body text-center">
-                   <div class="plan-icon mb-3">
-                       <div class="icon-wrapper bg-primary">
-                           <i class="fas fa-star"></i>
-                       </div>
-                   </div>
-                   <h4 class="plan-title">{{@$plan->title}}</h4>
-                   <div class="plan-price mb-3">
-                       <span class="currency">$</span>
-                       <span class="amount">{{@$plan->price}}</span>
-
-                   </div>
-                   <div>
-                    <p>
-                        {{@$plan->description}}
-                    </p>
-                   </div>
-
-                   <button class="btn btn-success btn-block">Buy Now {{@$plan->title}}</button>
-               </div>
-           </div>
-       </div>
-
-       @endforeach
+                </div>
+                <div class="transactions">
+                    @foreach ($users as $user)
+                        <a href="app-transaction-detail.html" class="item">
+                            <div class="detail">
+                                <img src="/assets/user/images/avatar3.jpg" alt="img" class="image-block imaged w48">
+                                <div>
+                                    <strong>{{ @$user->name }}</strong>
+                                    <p>{{ @$user->email }}</p>
+                                    <p>+ {{ @$user->phone_number }}</p>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <div class="price "> $ {{ @$user->balance }}</div>
+                            </div>
+                        </a>
+                    @endforeach
 
 
 
-    </div>
-</div>
-<!-- * Plans Section -->
-@endif
+                </div>
+            </div>
+            <!-- * Transactions -->
+        @endif
+
+        @if (count($plans) > 0)
+            <!-- Plans Section -->
+            <div class="section mt-4">
+                <div class="section-heading">
+                    <h2 class="title">Plans</h2>
+
+                </div>
+
+                <div class="row">
+                    @foreach ($plans as $plan)
+                        <div class="col-12 col-md-4 mb-3">
+                            <div class="card plan-card">
+                                <form method="POST" action="{{ route('purchase.store') }}">
+                                    @csrf
+
+                                    <input type="hidden" name="user_id" value="{{ auth()->user()->id}}">
+                                    <input type="hidden" name="plan_id" value="{{ $plan->id }}">
+                                    <input type="hidden" name="amount" value="{{ $plan->price }}">
+
+                                    <div class="card-body text-center">
+                                        <div class="plan-icon mb-3">
+                                            <div class="icon-wrapper bg-primary">
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                        </div>
+
+                                        <h4 class="plan-title">{{ $plan->title }}</h4>
+
+                                        <div class="plan-price mb-3">
+                                            <span class="currency">$</span>
+                                            <span class="amount">{{ $plan->price }}</span>
+                                        </div>
+
+                                        <p>{{ $plan->description }}</p>
+
+                                        <button type="submit" class="btn btn-success btn-block">
+                                            Buy Now {{ $plan->title }}
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+            </div>
+            <!-- * Plans Section -->
+        @endif
 
 
 
@@ -492,16 +497,16 @@
 
 
 
-    <!-- app footer -->
-    <div class="appFooter">
-        <div class="footer-title">
-            Copyright © {{ env('APP_NAME') }} @php echo date('Y'); @endphp. All Rights Reserved.
+        <!-- app footer -->
+        <div class="appFooter">
+            <div class="footer-title">
+                Copyright © {{ env('APP_NAME') }} @php echo date('Y'); @endphp. All Rights Reserved.
+            </div>
         </div>
-    </div>
-    <!-- * app footer -->
+        <!-- * app footer -->
 
-</div>
-<!-- * App Capsule -->
+    </div>
+    <!-- * App Capsule -->
 
 
 @endsection

@@ -23,6 +23,13 @@
                     <span>Withdrawal Requests</span>
                 </a>
             </li>
+
+            <li>
+                <a href="{{ route('purchases') }}" class="waves-effect">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>Purchase</span>
+                </a>
+            </li>
             <li>
                 <a href="{{route('admin.users')}}" class="waves-effect">
                     <i class="fas fa-users"></i>
